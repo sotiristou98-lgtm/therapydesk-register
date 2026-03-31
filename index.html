@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TherapyDesk - Εγγραφή</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #f5f0ff 0%, #ede7f6 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #1a1a2e;
+}
+.container {
+  max-width: 520px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.subtitle { color: #666; font-size: 14px; margin-bottom: 28px; }
+.section-title {
+  font-size: 15px; font-weight: 600; color: #7c3aed;
+  margin: 24px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #ede7f6;
+}
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: #333; }
+.field label .req { color: #e53e3e; }
+.row { display: flex; gap: 12px; }
+.row > .field { flex: 1; }
+input, select, textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 8px;
+  font-size: 15px; font-family: inherit; transition: border-color 0.2s; background: #fafafa;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: #7c3aed; background: white; }
+.parent-card {
+  background: #faf8ff; border: 1px solid #ede7f6; border-radius: 12px; padding: 16px; margin-bottom: 12px;
+}
+.parent-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px; font-weight: 600; font-size: 14px;
+}
+.primary-badge {
+  font-size: 11px; background: #7c3aed; color: white; padding: 2px 8px; border-radius: 10px;
+}
+.radio-group { display: flex; gap: 16px; margin: 8px 0 4px; }
+.radio-group label { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+.btn {
+  display: inline-block; width: 100%; padding: 12px; background: #7c3aed; color: white;
+  border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;
+  text-align: center; margin-top: 24px; transition: background 0.2s;
+}
+.btn:hover { background: #6d28d9; }
+.btn:disabled { background: #bbb; cursor: not-allowed; }
+.logo { text-align: center; margin-bottom: 20px; }
+.logo span { font-size: 28px; font-weight: 800; color: #7c3aed; }
+.success-box, .error-box {
+  text-align: center; padding: 40px 20px;
+}
+.success-icon {
+  width: 64px; height: 64px; margin: 0 auto 20px; background: #10b981; color: white;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 32px; font-weight: bold;
+}
+.error-box .error-msg { color: #e53e3e; margin: 12px 0; }
+.hidden { display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="logo"><span>TherapyDesk</span></div>
+
+  <!-- FORM -->
+  <div id="formView">
+    <h1>Εγγραφή Θεραπευόμενου</h1>
+    <p class="subtitle">Παρακαλώ συμπληρώστε τα στοιχεία σας</p>
+
+    <form id="regForm">
+      <div class="row">
+        <div class="field">
+          <label>Ονοματεπώνυμο <span class="req">*</span></label>
+          <input type="text" id="full_name" required autocomplete="name" />
+        </div>
+        <div class="field">
+          <label>Ημ. Γέννησης <span class="req">*</span></label>
+          <input type="date" id="date_of_birth" required />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Φύλο <span class="req">*</span></label>
+        <select id="gender" required>
+          <option value="">--</option>
+          <option value="male">Αρσενικό</option>
+          <option value="female">Θηλυκό</option>
+          <option value="other">Άλλο</option>
+        </select>
+      </div>
+
+      <div class="section-title">Επιβλέπων Ιατρός</div>
+      <div class="row">
+        <div class="field">
+          <label>Ονοματεπώνυμο</label>
+          <input type="text" id="referring_doctor" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="referring_email" />
+        </div>
+      </div>
+
+      <div class="section-title">Γονείς / Κηδεμόνες</div>
+
+      <div class="parent-card">
+        <div class="parent-header">
+          Γονέας 1
+          <span class="primary-badge" id="badge1">Κύριος</span>
+        </div>
+        <div class="field">
+          <label>Ονοματεπώνυμο</label>
+          <input type="text" id="p1_name" />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Τηλέφωνο</label>
+            <input type="tel" id="p1_phone" />
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="p1_email" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Διεύθυνση</label>
+          <input type="text" id="p1_address" />
+        </div>
+      </div>
+
+      <div class="parent-card">
+        <div class="parent-header">
+          Γονέας 2
+          <span class="primary-badge" id="badge2" style="display:none">Κύριος</span>
+        </div>
+        <div class="field">
+          <label>Ονοματεπώνυμο</label>
+          <input type="text" id="p2_name" />
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>Τηλέφωνο</label>
+            <input type="tel" id="p2_phone" />
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" id="p2_email" />
+          </div>
+        </div>
+        <div class="field">
+          <label>Διεύθυνση</label>
+          <input type="text" id="p2_address" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Κύριος γονέας / κηδεμόνας</label>
+        <div class="radio-group">
+          <label><input type="radio" name="primary_parent" value="1" checked onchange="toggleBadges()"> Γονέας 1</label>
+          <label><input type="radio" name="primary_parent" value="2" onchange="toggleBadges()"> Γονέας 2</label>
+        </div>
+      </div>
+
+      <button type="submit" class="btn" id="submitBtn">Υποβολή</button>
+    </form>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="successView" class="success-box hidden">
+    <div class="success-icon">&#10003;</div>
+    <h1>Η εγγραφή ολοκληρώθηκε!</h1>
+    <p style="color:#666;margin-top:8px">Ευχαριστούμε. Τα στοιχεία σας καταχωρήθηκαν επιτυχώς.</p>
+  </div>
+
+  <!-- ERROR -->
+  <div id="errorView" class="error-box hidden">
+    <h1>Σφάλμα</h1>
+    <p class="error-msg" id="errorMsg"></p>
+    <button class="btn" onclick="document.getElementById('errorView').classList.add('hidden');document.getElementById('formView').classList.remove('hidden');">Πίσω</button>
+  </div>
+</div>
+
+<script>
+var API_URL = 'https://iysnduhmfaavpljybypj.supabase.co/functions/v1/patient-register';
+// This form is hosted on GitHub Pages, API calls go to Supabase Edge Function
+
+function toggleBadges() {
+  var v = document.querySelector('input[name="primary_parent"]:checked').value;
+  document.getElementById('badge1').style.display = v === '1' ? '' : 'none';
+  document.getElementById('badge2').style.display = v === '2' ? '' : 'none';
+}
+
+document.getElementById('regForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Υποβολή...';
+
+  var parents = [];
+  var p1Name = document.getElementById('p1_name').value.trim();
+  if (p1Name) {
+    parents.push({
+      full_name: p1Name,
+      phone: document.getElementById('p1_phone').value.trim(),
+      email: document.getElementById('p1_email').value.trim(),
+      address: document.getElementById('p1_address').value.trim()
+    });
+  }
+  var p2Name = document.getElementById('p2_name').value.trim();
+  if (p2Name) {
+    parents.push({
+      full_name: p2Name,
+      phone: document.getElementById('p2_phone').value.trim(),
+      email: document.getElementById('p2_email').value.trim(),
+      address: document.getElementById('p2_address').value.trim()
+    });
+  }
+
+  var payload = {
+    full_name: document.getElementById('full_name').value,
+    date_of_birth: document.getElementById('date_of_birth').value,
+    gender: document.getElementById('gender').value,
+    referring_doctor: document.getElementById('referring_doctor').value,
+    referring_email: document.getElementById('referring_email').value,
+    parents: parents,
+    primary_parent: parseInt(document.querySelector('input[name="primary_parent"]:checked').value)
+  };
+
+  try {
+    var res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Server error');
+
+    document.getElementById('formView').classList.add('hidden');
+    document.getElementById('successView').classList.remove('hidden');
+  } catch (err) {
+    document.getElementById('errorMsg').textContent = err.message || 'Κάτι πήγε στραβά. Δοκιμάστε ξανά.';
+    document.getElementById('formView').classList.add('hidden');
+    document.getElementById('errorView').classList.remove('hidden');
+    btn.disabled = false;
+    btn.textContent = 'Υποβολή';
+  }
+});
+</script>
+</body>
+</html>
