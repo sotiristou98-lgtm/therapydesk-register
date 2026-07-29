@@ -58,6 +58,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: #7c3aed
 .btn:disabled { background: #bbb; cursor: not-allowed; }
 .logo { text-align: center; margin-bottom: 20px; }
 .logo span { font-size: 28px; font-weight: 800; color: #7c3aed; }
+.consent-box {
+  margin-top: 20px; padding: 12px 14px; background: #faf8ff;
+  border: 1px solid #ede7f6; border-radius: 10px;
+}
+.consent-box label { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.5; cursor: pointer; color: #333; }
+.consent-box input { width: auto; margin-top: 2px; }
+.consent-box a { color: #7c3aed; font-weight: 600; }
 .success-box, .error-box {
   text-align: center; padding: 40px 20px;
 }
@@ -173,6 +180,13 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: #7c3aed
         </div>
       </div>
 
+            <div class="consent-box">
+        <label>
+          <input type="checkbox" id="consent" required />
+          <span>&#916;&#953;&#940;&#946;&#945;&#963;&#945; &#954;&#945;&#953; &#945;&#960;&#959;&#948;&#941;&#967;&#959;&#956;&#945;&#953; &#964;&#951;&#957; <a href="https://twogether.gr/privacy.html" target="_blank" rel="noopener">&#928;&#959;&#955;&#953;&#964;&#953;&#954;&#942; &#913;&#960;&#959;&#961;&#961;&#942;&#964;&#959;&#965;</a> &#954;&#945;&#953; &#963;&#965;&#957;&#945;&#953;&#957;&#974; &#963;&#964;&#951;&#957; &#949;&#960;&#949;&#958;&#949;&#961;&#947;&#945;&#963;&#943;&#945; &#964;&#969;&#957; &#963;&#964;&#959;&#953;&#967;&#949;&#943;&#969;&#957; &#960;&#959;&#965; &#948;&#951;&#955;&#974;&#957;&#969; (&#948;&#953;&#954;&#974;&#957; &#956;&#959;&#965; &#954;&#945;&#953; &#964;&#959;&#965; &#960;&#945;&#953;&#948;&#953;&#959;&#973;) &#945;&#960;&#972; &#964;&#959; Twogether, &#956;&#949; &#963;&#954;&#959;&#960;&#972; &#964;&#951;&#957; &#949;&#947;&#947;&#961;&#945;&#966;&#942; &#954;&#945;&#953; &#964;&#951;&#957; &#949;&#960;&#953;&#954;&#959;&#953;&#957;&#969;&#957;&#943;&#945; &#956;&#945;&#950;&#943; &#956;&#959;&#965;. <span class="req">*</span></span>
+        </label>
+      </div>
+
       <button type="submit" class="btn" id="submitBtn">Υποβολή</button>
     </form>
   </div>
@@ -193,8 +207,8 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: #7c3aed
 </div>
 
 <script>
-var API_URL = 'https://iysnduhmfaavpljybypj.supabase.co/functions/v1/patient-register';
 // This form is hosted on GitHub Pages, API calls go to Supabase Edge Function
+var API_URL = 'https://iysnduhmfaavpljybypj.supabase.co/functions/v1/patient-register';
 
 function toggleBadges() {
   var v = document.querySelector('input[name="primary_parent"]:checked').value;
@@ -235,7 +249,8 @@ document.getElementById('regForm').addEventListener('submit', async function(e) 
     referring_doctor: document.getElementById('referring_doctor').value,
     referring_email: document.getElementById('referring_email').value,
     parents: parents,
-    primary_parent: parseInt(document.querySelector('input[name="primary_parent"]:checked').value)
+    primary_parent: parseInt(document.querySelector('input[name="primary_parent"]:checked').value),
+    consent: document.getElementById('consent').checked
   };
 
   try {
